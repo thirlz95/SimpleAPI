@@ -8,13 +8,12 @@ const users = request('http://localhost:5000/api/users');
 chai.use(chaiHttp);
 chai.use(chaiFuzzy);
 const connectDB = require('../../../config/db');
-const conn = connectDB();
 
 describe('POST /users', () => {
-  before(done => {
-    conn.then(() => done()).catch(err => done(err));
-  });
-
+  /*
+  TODO: Need to write a script to either clear a testing database or
+  remove the mock users in the main database implementation 
+  */
   it('OK, Create a new user', async () => {
     let response = await users
       .post('/')
@@ -27,7 +26,6 @@ describe('POST /users', () => {
         return response;
       });
     const body = response.body;
-    console.log(response);
     expect(response).to.have.status(200);
     expect(body).to.contain.property('token');
   });
