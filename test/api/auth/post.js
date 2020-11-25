@@ -93,7 +93,7 @@ describe('testing functionality of auth ', () => {
       expect(body).to.eql({ msg: 'No Token, auth denied' });
     });
 
-    it('successful  auth/, user can view their user object', async () => {
+    it('successful auth/, user can view their user object', async () => {
       let response = await auth
         .get('/')
         .set({

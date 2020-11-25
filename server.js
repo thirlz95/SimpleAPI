@@ -18,10 +18,11 @@ app.get('/', (req, res) =>
 );
 
 //routes
-const users = app.use('/api/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/contacts', require('./routes/contacts'));
 app.use('/api/email', require('./routes/email'));
+app.use('/api/projects', require('./routes/projects'));
 
 const PORT = process.env.PORT || 5000;
 

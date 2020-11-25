@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-module.exports = function (req, res, next) {
+function auth(req, res, next) {
   // get token from header
   const token = req.header('x-auth-token');
-  console.log('!!!!!!!', req.body)
+  console.log('!!!!!!!', req.body);
   console.log('Token exist in request?', token);
   if (!token) {
     return res.status(401).json({ msg: 'No Token, auth denied' });
@@ -17,3 +17,22 @@ module.exports = function (req, res, next) {
     res.status(401).json({ msg: 'Token is not valid' });
   }
 }
+
+// fix this auth...
+const authRole = async (req, res, next) => {
+  const user = await User.findById(req).select('-password');
+  console.log('oioi', user.role);
+  if (user.role !== 'admin') {
+    res.status(401).json({ msg: 'Token is not valid' });
+  }
+  try {
+    next();
+  } catch (err) {
+    res.status(401).json({ msg: 'user does not have admin permissions' });
+  }
+};
+
+module.exports = {
+  auth,
+  authRole
+};
