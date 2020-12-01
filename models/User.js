@@ -13,15 +13,6 @@ const UserSchema = mongoose.Schema({
     type: String,
     default: 'user'
   },
-  firstName: {
-    type: String
-  },
-  lastName: {
-    type: String
-  },
-  gender: {
-    type: String
-  },
   bio: {
     type: String
   },

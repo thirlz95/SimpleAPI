@@ -24,29 +24,19 @@ router.get('/', auth, async (req, res) => {
 // @desc    change logged in user skills, bio and other assets
 // @access  Private
 router.put('/:id', auth, async (req, res) => {
-  const { title, bio } = req.body;
+  const { updateBio } = req.body;
 
-  console.log('req.body', req.body);
-  console.log('req.headers', req.headers);
-
-  const skillsUpdate = {};
-  if (title) skillsUpdate.title = title;
-
-  const bioUpdate = {};
-  if (bio) bioUpdate.bio = bio;
+  console.log('bio', updateBio);
+  console.log('request params', req.params);
 
   try {
-    let user = await User.findById(req.params.id);
+    let user = await User.findById(req.params.id).select('-password');
     console.log('User Found?', user);
     if (!user) return res.status(404).json({ msg: 'User not found' });
-    if (title) {
-      user = await User.findByIdAndUpdate(req.params.id, {
-        $addToSet: { skills: skillsUpdate }
-      });
-    } else if (bio) {
+    if (updateBio) {
       console.log('hit else if');
-      user = await User.findByIdAndUpdate(req.params.id, bioUpdate, {
-        upsert: true
+      user = await User.findByIdAndUpdate(req.params.id, {
+        bio: updateBio
       });
     }
     res.json(user);
