@@ -11,7 +11,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 app.use(cors());
 
-app.get('/', (req, res) =>
+app.get('/', res =>
   res.json({
     msg: 'Welcome to the Contact API, this is a simplistic api boilerplate'
   })
@@ -23,6 +23,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/contacts', require('./routes/contacts'));
 app.use('/api/email', require('./routes/email'));
 app.use('/api/projects', require('./routes/projects'));
+app.use('/api/comments', require('./routes/comments'));
 
 const PORT = process.env.PORT || 5000;
 
